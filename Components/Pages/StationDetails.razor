@@ -1,0 +1,28 @@
+<style>
+    .card {
+        margin-top: 40px;
+        margin-left: 10px;
+        margin-bottom: 75px;
+        align-items: center;
+        display: flex;
+    }
+
+    .card-body {
+        align-items: center;
+    }
+</style>
+@* bootstrap *@
+<div class="card" style="width: 18rem; align-items: center">
+  <img src=@station.logoUrl class="card-img-top" alt="station-logo" />
+  <div class="card-body">
+    <h5 class="card-title">Call Letters: @station.CallLetters</h5>
+    <p class="card-text">Market: @station.Market</p>
+    <p class="card-text">Affiliate: @station.Affiliate</p>
+    <a href=@station.websiteUrl class="btn btn-primary" target="_blank">@station.CallLetters website</a>
+  </div>
+</div>
+
+@code {
+    [Parameter]
+    public StationItem station { get; set; }
+}

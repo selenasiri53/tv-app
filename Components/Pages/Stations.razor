@@ -1,0 +1,88 @@
+@page "/stations"
+@rendermode InteractiveServer
+
+@attribute [StreamRendering]
+
+<PageTitle>Stations</PageTitle>
+
+@* Custom hero video: <a href="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF6kCYXiV0&#x2F;view?utm_content=DAF6kCYXiV0&amp;utm_campaign=designshare&amp;utm_medium=embeds&amp;utm_source=link" target="_blank" rel="noopener">Company Website Business Website in Violet Dark Blue Neon Pink Gradient Tech Style</a> by Selena Siri *@
+<div style="position: relative; max-width: 100%; height: auto; object-fit: contain; padding-top: 56.2225%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+  <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+    src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAF6kCYXiV0&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+  </iframe>
+</div>
+
+  <h1>Stations</h1>
+
+  @if (stations != null) {
+    <form class="row">
+      <div class="form-floating">
+        <select @bind="selectedStationId" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+          <option selected></option>
+
+          @foreach (var station in stations)
+          {
+            <option value=@station.id>@station.CallLetters</option>
+          }
+        </select>
+        <label for="floatingSelect">Select a station</label>
+      </div>
+    </form>
+  }
+
+  @if (stationSelected != null) {
+    <StationDetails station=@stationSelected />
+  }
+
+  @code {
+    private StationItem[]? stations;
+    private StationItem? stationSelected;
+
+    private string _selectedStationId="";
+
+    public string selectedStationId
+    {
+      get { return _selectedStationId; }
+      set
+      {
+        _selectedStationId = value;
+
+        if (!string.IsNullOrWhiteSpace(value) && stations != null) {
+          stationSelected = Array.Find(stations, s => s.id+ "" == value);
+        }
+      }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+      stations = new StationItem[]
+        {
+          new StationItem {
+            id=1, 
+            CallLetters="KTLA-TV",
+            Market="Los Angeles",
+            Affiliate="The CW",
+            logoUrl="images/KTLA.png",
+            websiteUrl="https://ktla.com/"
+          },
+          new StationItem {
+            id=2,
+            CallLetters="WNYE-TV",
+            Market="New York City",
+            Affiliate="Non-commercial independent",
+            logoUrl="images/NYC_TV.png",
+            websiteUrl="https://www.nyc.gov/site/media/index.page"
+          },
+            new StationItem {
+            id=3,
+            CallLetters="KPIX-TV",
+            Market="San Francisco, CA",
+            Affiliate="CBS Bay Area",
+            logoUrl="images/CBS.png",
+            websiteUrl="https://www.cbsnews.com/sanfrancisco/"
+          }
+        };
+    }
+  }
